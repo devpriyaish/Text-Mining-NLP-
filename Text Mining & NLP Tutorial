@@ -1,0 +1,1659 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import os"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import nltk"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 8,
+   "metadata": {
+    "scrolled": true
+   },
+   "outputs": [],
+   "source": [
+    "import nltk.corpus"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 9,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "['gutenberg', 'udhr', 'cess_esp.zip', 'rte.zip', 'brown', 'treebank', 'udhr.zip', 'cess_cat.zip', 'mte_teip5', 'cmudict.zip', 'webtext', 'reuters.zip', 'mte_teip5.zip', 'pros_cons.zip', 'sentiwordnet.zip', 'udhr2', 'framenet_v15', 'dependency_treebank', 'product_reviews_1.zip', 'brown.zip', 'city_database.zip', 'wordnet.zip', 'nps_chat.zip', 'ycoe.zip', 'paradigms.zip', 'conll2000.zip', 'mac_morpho', 'omw.zip', 'jeita.zip', 'gazetteers.zip', 'cess_cat', 'names', 'switchboard.zip', 'pl196x.zip', 'biocreative_ppi.zip', 'swadesh.zip', 'timit', 'genesis', 'ptb.zip', 'wordnet_ic.zip', 'framenet_v15.zip', 'genesis.zip', 'subjectivity', 'sentiwordnet', 'europarl_raw', 'abc.zip', 'pil.zip', 'pil', 'alpino', 'ppattach', 'movie_reviews', 'webtext.zip', 'qc', 'dependency_treebank.zip', 'kimmo', 'unicode_samples.zip', 'conll2000', 'rte', 'europarl_raw.zip', 'brown_tei.zip', 'lin_thesaurus.zip', 'propbank.zip', 'opinion_lexicon', 'problem_reports.zip', 'words.zip', 'udhr2.zip', 'sinica_treebank', 'ppattach.zip', 'inaugural', 'paradigms', 'pros_cons', 'framenet_v17', 'twitter_samples.zip', 'words', 'treebank.zip', 'crubadan', 'state_union.zip', 'product_reviews_2', 'twitter_samples', 'mac_morpho.zip', 'ieer', 'panlex_swadesh.zip', 'comparative_sentences', 'inaugural.zip', 'toolbox.zip', 'wordnet', 'abc', 'wordnet_ic', 'dolch.zip', 'comparative_sentences.zip', 'shakespeare', 'indian.zip', 'indian', 'swadesh', 'nps_chat', 'ieer.zip', 'floresta', 'problem_reports', 'smultron', 'sinica_treebank.zip', 'state_union', 'conll2007.zip', 'knbc.zip', 'chat80', 'product_reviews_2.zip', 'smultron.zip', 'unicode_samples', 'dolch', 'brown_tei', 'sentence_polarity.zip', 'movie_reviews.zip', 'alpino.zip', 'universal_treebanks_v20.zip', 'ptb', 'semcor.zip', 'nombank.1.0.zip', 'city_database', 'senseval', 'senseval.zip', 'nonbreaking_prefixes', 'verbnet.zip', 'machado.zip', 'comtrans.zip', 'cess_esp', 'switchboard', 'product_reviews_1', 'gazetteers', 'shakespeare.zip', 'subjectivity.zip', 'sentence_polarity', 'names.zip', 'verbnet', 'pl196x', 'stopwords', 'qc.zip', 'toolbox', 'verbnet3', 'conll2002.zip', 'floresta.zip', 'framenet_v17.zip', 'gutenberg.zip', 'omw', 'nonbreaking_prefixes.zip', 'kimmo.zip', 'conll2002', 'masc_tagged.zip', 'opinion_lexicon.zip', 'chat80.zip', 'timit.zip', 'cmudict', 'ycoe', 'verbnet3.zip', 'crubadan.zip', 'lin_thesaurus', 'stopwords.zip', 'biocreative_ppi']\n"
+     ]
+    }
+   ],
+   "source": [
+    "print(os.listdir(nltk.data.find(\"corpora\")))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 12,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "['austen-emma.txt',\n",
+       " 'austen-persuasion.txt',\n",
+       " 'austen-sense.txt',\n",
+       " 'bible-kjv.txt',\n",
+       " 'blake-poems.txt',\n",
+       " 'bryant-stories.txt',\n",
+       " 'burgess-busterbrown.txt',\n",
+       " 'carroll-alice.txt',\n",
+       " 'chesterton-ball.txt',\n",
+       " 'chesterton-brown.txt',\n",
+       " 'chesterton-thursday.txt',\n",
+       " 'edgeworth-parents.txt',\n",
+       " 'melville-moby_dick.txt',\n",
+       " 'milton-paradise.txt',\n",
+       " 'shakespeare-caesar.txt',\n",
+       " 'shakespeare-hamlet.txt',\n",
+       " 'shakespeare-macbeth.txt',\n",
+       " 'whitman-leaves.txt']"
+      ]
+     },
+     "execution_count": 12,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "nltk.corpus.gutenberg.fileids()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 13,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "['[', 'The', 'Tragedie', 'of', 'Hamlet', 'by', ...]"
+      ]
+     },
+     "execution_count": 13,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "hamlet = nltk.corpus.gutenberg.words('shakespeare-hamlet.txt')\n",
+    "hamlet"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 17,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "[ The Tragedie of Hamlet by William Shakespeare 1599 ] Actus Primus . Scoena Prima . Enter Barnardo and Francisco two Centinels . Barnardo . Who ' s there ? Fran . Nay answer me : Stand & vnfold your selfe Bar . Long liue the King Fran . Barnardo ? Bar . He Fran . You come most carefully vpon your houre Bar . ' Tis now strook twelue , get thee to bed Francisco Fran . For this releefe much thankes : ' Tis bitter cold , And I am sicke at heart Barn . Haue you had quiet Guard ? Fran . Not a Mouse stirring Barn . Well , goodnight . If you do meet Horatio and Marcellus , the Riuals of my Watch , bid them make hast . Enter Horatio and Marcellus . Fran . I thinke I heare them . Stand : who ' s there ? Hor . Friends to this ground Mar . And Leige - men to the Dane Fran . Giue you good night Mar . O farwel honest Soldier , who hath relieu ' d you ? Fra . Barnardo ha ' s my place : giue you goodnight . Exit Fran . Mar . Holla Barnardo Bar . Say , what is Horatio there ? Hor . A peece of him Bar . Welcome Horatio , welcome good Marcellus Mar . What , ha ' s this thing appear ' d againe to night Bar . I haue seene nothing Mar . Horatio saies , ' tis but our Fantasie , And will not let beleefe take hold of him Touching this dreaded sight , twice seene of vs , Therefore I haue intreated him along With vs , to watch the minutes of this Night , That if againe this Apparition come , He may approue our eyes , and speake to it Hor . Tush , tush , ' twill not appeare Bar . Sit downe a - while , And let vs once againe assaile your eares , That are so fortified against our Story , What we two Nights haue seene Hor . Well , sit we downe , And let vs heare Barnardo speake of this Barn . Last night of all , When yond same Starre that ' s Westward from the Pole Had made his course t ' illume that part of Heauen Where now it burnes , Marcellus and my selfe , The Bell then beating one Mar . Peace , breake thee of : Enter the Ghost . Looke where it comes againe Barn . In the same figure , like the King that ' s dead Mar . Thou art a Scholler ; speake to it Horatio Barn . Lookes it not like the King ? Marke it Horatio Hora . Most like : It harrowes me with fear & wonder Barn . It would be spoke too Mar . Question it Horatio Hor . What art "
+     ]
+    }
+   ],
+   "source": [
+    "for word in hamlet[:500]:\n",
+    "    print(word, sep=' ', end=' ')"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 22,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "AI = 'In computer science, artificial intelligence (AI), sometimes called machine intelligence, is intelligence demonstrated by machines, in contrast to the natural intelligence displayed by humans and animals. Computer science defines AI research as the study of \"intelligent agents\": any device that perceives its environment and takes actions that maximize its chance of successfully achieving its goals.[1] Colloquially, the term \"artificial intelligence\" is used to describe machines that mimic \"cognitive\" functions that humans associate with other human minds, such as \"learning\" and \"problem solving\".[2]'"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 23,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "str"
+      ]
+     },
+     "execution_count": 23,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "type(AI)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Tokenizing"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 24,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from nltk.tokenize import word_tokenize"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 25,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "['In',\n",
+       " 'computer',\n",
+       " 'science',\n",
+       " ',',\n",
+       " 'artificial',\n",
+       " 'intelligence',\n",
+       " '(',\n",
+       " 'AI',\n",
+       " ')',\n",
+       " ',',\n",
+       " 'sometimes',\n",
+       " 'called',\n",
+       " 'machine',\n",
+       " 'intelligence',\n",
+       " ',',\n",
+       " 'is',\n",
+       " 'intelligence',\n",
+       " 'demonstrated',\n",
+       " 'by',\n",
+       " 'machines',\n",
+       " ',',\n",
+       " 'in',\n",
+       " 'contrast',\n",
+       " 'to',\n",
+       " 'the',\n",
+       " 'natural',\n",
+       " 'intelligence',\n",
+       " 'displayed',\n",
+       " 'by',\n",
+       " 'humans',\n",
+       " 'and',\n",
+       " 'animals',\n",
+       " '.',\n",
+       " 'Computer',\n",
+       " 'science',\n",
+       " 'defines',\n",
+       " 'AI',\n",
+       " 'research',\n",
+       " 'as',\n",
+       " 'the',\n",
+       " 'study',\n",
+       " 'of',\n",
+       " '``',\n",
+       " 'intelligent',\n",
+       " 'agents',\n",
+       " \"''\",\n",
+       " ':',\n",
+       " 'any',\n",
+       " 'device',\n",
+       " 'that',\n",
+       " 'perceives',\n",
+       " 'its',\n",
+       " 'environment',\n",
+       " 'and',\n",
+       " 'takes',\n",
+       " 'actions',\n",
+       " 'that',\n",
+       " 'maximize',\n",
+       " 'its',\n",
+       " 'chance',\n",
+       " 'of',\n",
+       " 'successfully',\n",
+       " 'achieving',\n",
+       " 'its',\n",
+       " 'goals',\n",
+       " '.',\n",
+       " '[',\n",
+       " '1',\n",
+       " ']',\n",
+       " 'Colloquially',\n",
+       " ',',\n",
+       " 'the',\n",
+       " 'term',\n",
+       " '``',\n",
+       " 'artificial',\n",
+       " 'intelligence',\n",
+       " \"''\",\n",
+       " 'is',\n",
+       " 'used',\n",
+       " 'to',\n",
+       " 'describe',\n",
+       " 'machines',\n",
+       " 'that',\n",
+       " 'mimic',\n",
+       " '``',\n",
+       " 'cognitive',\n",
+       " \"''\",\n",
+       " 'functions',\n",
+       " 'that',\n",
+       " 'humans',\n",
+       " 'associate',\n",
+       " 'with',\n",
+       " 'other',\n",
+       " 'human',\n",
+       " 'minds',\n",
+       " ',',\n",
+       " 'such',\n",
+       " 'as',\n",
+       " '``',\n",
+       " 'learning',\n",
+       " \"''\",\n",
+       " 'and',\n",
+       " '``',\n",
+       " 'problem',\n",
+       " 'solving',\n",
+       " \"''\",\n",
+       " '.',\n",
+       " '[',\n",
+       " '2',\n",
+       " ']']"
+      ]
+     },
+     "execution_count": 25,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "AI_tokens = word_tokenize(AI)\n",
+    "AI_tokens"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 26,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "110"
+      ]
+     },
+     "execution_count": 26,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "len(AI_tokens)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 27,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from nltk.probability import FreqDist\n",
+    "fdist = FreqDist()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 28,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "FreqDist({',': 6, 'intelligence': 5, '``': 5, \"''\": 5, 'that': 4, 'the': 3, 'and': 3, '.': 3, 'its': 3, 'in': 2, ...})"
+      ]
+     },
+     "execution_count": 28,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "for word in AI_tokens:\n",
+    "    fdist[word.lower()] += 1\n",
+    "fdist"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 29,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "[(',', 6),\n",
+       " ('intelligence', 5),\n",
+       " ('``', 5),\n",
+       " (\"''\", 5),\n",
+       " ('that', 4),\n",
+       " ('the', 3),\n",
+       " ('and', 3),\n",
+       " ('.', 3),\n",
+       " ('its', 3),\n",
+       " ('in', 2)]"
+      ]
+     },
+     "execution_count": 29,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "fdist_top10 = fdist.most_common(10)\n",
+    "fdist_top10"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 30,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "1"
+      ]
+     },
+     "execution_count": 30,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "from nltk.tokenize import blankline_tokenize\n",
+    "AI_blank = blankline_tokenize(AI)\n",
+    "len(AI_blank)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 31,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from nltk.util import bigrams, trigrams, ngrams"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 33,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "['The',\n",
+       " 'best',\n",
+       " '&',\n",
+       " 'most',\n",
+       " 'beautiful',\n",
+       " 'things',\n",
+       " 'in',\n",
+       " 'the',\n",
+       " 'world',\n",
+       " 'can',\n",
+       " 'not',\n",
+       " 'be',\n",
+       " 'seen',\n",
+       " 'or',\n",
+       " 'even',\n",
+       " 'touched',\n",
+       " ',',\n",
+       " 'they',\n",
+       " 'must',\n",
+       " 'be',\n",
+       " 'felt',\n",
+       " 'with',\n",
+       " 'the',\n",
+       " 'heart',\n",
+       " '.']"
+      ]
+     },
+     "execution_count": 33,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "string = \"The best & most beautiful things in the world cannot be seen or even touched, they must be felt with the heart.\"\n",
+    "quotes_tokens = nltk.word_tokenize(string)\n",
+    "quotes_tokens"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 35,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "[('The', 'best'),\n",
+       " ('best', '&'),\n",
+       " ('&', 'most'),\n",
+       " ('most', 'beautiful'),\n",
+       " ('beautiful', 'things'),\n",
+       " ('things', 'in'),\n",
+       " ('in', 'the'),\n",
+       " ('the', 'world'),\n",
+       " ('world', 'can'),\n",
+       " ('can', 'not'),\n",
+       " ('not', 'be'),\n",
+       " ('be', 'seen'),\n",
+       " ('seen', 'or'),\n",
+       " ('or', 'even'),\n",
+       " ('even', 'touched'),\n",
+       " ('touched', ','),\n",
+       " (',', 'they'),\n",
+       " ('they', 'must'),\n",
+       " ('must', 'be'),\n",
+       " ('be', 'felt'),\n",
+       " ('felt', 'with'),\n",
+       " ('with', 'the'),\n",
+       " ('the', 'heart'),\n",
+       " ('heart', '.')]"
+      ]
+     },
+     "execution_count": 35,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "quotes_bigrams = list(nltk.bigrams(quotes_tokens))\n",
+    "quotes_bigrams"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 36,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "[('The', 'best', '&'),\n",
+       " ('best', '&', 'most'),\n",
+       " ('&', 'most', 'beautiful'),\n",
+       " ('most', 'beautiful', 'things'),\n",
+       " ('beautiful', 'things', 'in'),\n",
+       " ('things', 'in', 'the'),\n",
+       " ('in', 'the', 'world'),\n",
+       " ('the', 'world', 'can'),\n",
+       " ('world', 'can', 'not'),\n",
+       " ('can', 'not', 'be'),\n",
+       " ('not', 'be', 'seen'),\n",
+       " ('be', 'seen', 'or'),\n",
+       " ('seen', 'or', 'even'),\n",
+       " ('or', 'even', 'touched'),\n",
+       " ('even', 'touched', ','),\n",
+       " ('touched', ',', 'they'),\n",
+       " (',', 'they', 'must'),\n",
+       " ('they', 'must', 'be'),\n",
+       " ('must', 'be', 'felt'),\n",
+       " ('be', 'felt', 'with'),\n",
+       " ('felt', 'with', 'the'),\n",
+       " ('with', 'the', 'heart'),\n",
+       " ('the', 'heart', '.')]"
+      ]
+     },
+     "execution_count": 36,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "quotes_trigrams = list(nltk.trigrams(quotes_tokens))\n",
+    "quotes_trigrams"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 37,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "[('The', 'best', '&', 'most', 'beautiful'),\n",
+       " ('best', '&', 'most', 'beautiful', 'things'),\n",
+       " ('&', 'most', 'beautiful', 'things', 'in'),\n",
+       " ('most', 'beautiful', 'things', 'in', 'the'),\n",
+       " ('beautiful', 'things', 'in', 'the', 'world'),\n",
+       " ('things', 'in', 'the', 'world', 'can'),\n",
+       " ('in', 'the', 'world', 'can', 'not'),\n",
+       " ('the', 'world', 'can', 'not', 'be'),\n",
+       " ('world', 'can', 'not', 'be', 'seen'),\n",
+       " ('can', 'not', 'be', 'seen', 'or'),\n",
+       " ('not', 'be', 'seen', 'or', 'even'),\n",
+       " ('be', 'seen', 'or', 'even', 'touched'),\n",
+       " ('seen', 'or', 'even', 'touched', ','),\n",
+       " ('or', 'even', 'touched', ',', 'they'),\n",
+       " ('even', 'touched', ',', 'they', 'must'),\n",
+       " ('touched', ',', 'they', 'must', 'be'),\n",
+       " (',', 'they', 'must', 'be', 'felt'),\n",
+       " ('they', 'must', 'be', 'felt', 'with'),\n",
+       " ('must', 'be', 'felt', 'with', 'the'),\n",
+       " ('be', 'felt', 'with', 'the', 'heart'),\n",
+       " ('felt', 'with', 'the', 'heart', '.')]"
+      ]
+     },
+     "execution_count": 37,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "quotes_ngrams = list(nltk.ngrams(quotes_tokens,5))\n",
+    "quotes_ngrams"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Stemming"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Normalize words into its base form or root form"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 38,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from nltk.stem import PorterStemmer\n",
+    "pst = PorterStemmer()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 39,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "'have'"
+      ]
+     },
+     "execution_count": 39,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "pst.stem(\"having\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 41,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "give:give\n",
+      "giving:give\n",
+      "given:given\n",
+      "gave:gave\n"
+     ]
+    }
+   ],
+   "source": [
+    "words_to_stem = ['give', 'giving', 'given', 'gave']\n",
+    "for words in words_to_stem:\n",
+    "    print(words + ':' + pst.stem(words))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 43,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "give:giv\n",
+      "giving:giv\n",
+      "given:giv\n",
+      "gave:gav\n"
+     ]
+    }
+   ],
+   "source": [
+    "from nltk.stem import LancasterStemmer\n",
+    "lst = LancasterStemmer()\n",
+    "for words in words_to_stem:\n",
+    "    print(words + ':' + lst.stem(words))"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Lennatization"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Lemmatization"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#Groups together different inflected forms of a word called lemma\n",
+    "#Somehow similar to stemming, as it maps several words into one common root\n",
+    "#Output of lemmatization is a proper word\n",
+    "#gone, going, went--> go"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 44,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from nltk.stem import wordnet\n",
+    "from nltk.stem import WordNetLemmatizer\n",
+    "word_lem = WordNetLemmatizer()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 45,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "'corpus'"
+      ]
+     },
+     "execution_count": 45,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "word_lem.lemmatize('corpora')"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 46,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "give:give\n",
+      "giving:giving\n",
+      "given:given\n",
+      "gave:gave\n"
+     ]
+    }
+   ],
+   "source": [
+    "for words in words_to_stem:\n",
+    "    print(words + ':' + word_lem.lemmatize(words))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 54,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "['i',\n",
+       " 'me',\n",
+       " 'my',\n",
+       " 'myself',\n",
+       " 'we',\n",
+       " 'our',\n",
+       " 'ours',\n",
+       " 'ourselves',\n",
+       " 'you',\n",
+       " \"you're\",\n",
+       " \"you've\",\n",
+       " \"you'll\",\n",
+       " \"you'd\",\n",
+       " 'your',\n",
+       " 'yours',\n",
+       " 'yourself',\n",
+       " 'yourselves',\n",
+       " 'he',\n",
+       " 'him',\n",
+       " 'his',\n",
+       " 'himself',\n",
+       " 'she',\n",
+       " \"she's\",\n",
+       " 'her',\n",
+       " 'hers',\n",
+       " 'herself',\n",
+       " 'it',\n",
+       " \"it's\",\n",
+       " 'its',\n",
+       " 'itself',\n",
+       " 'they',\n",
+       " 'them',\n",
+       " 'their',\n",
+       " 'theirs',\n",
+       " 'themselves',\n",
+       " 'what',\n",
+       " 'which',\n",
+       " 'who',\n",
+       " 'whom',\n",
+       " 'this',\n",
+       " 'that',\n",
+       " \"that'll\",\n",
+       " 'these',\n",
+       " 'those',\n",
+       " 'am',\n",
+       " 'is',\n",
+       " 'are',\n",
+       " 'was',\n",
+       " 'were',\n",
+       " 'be',\n",
+       " 'been',\n",
+       " 'being',\n",
+       " 'have',\n",
+       " 'has',\n",
+       " 'had',\n",
+       " 'having',\n",
+       " 'do',\n",
+       " 'does',\n",
+       " 'did',\n",
+       " 'doing',\n",
+       " 'a',\n",
+       " 'an',\n",
+       " 'the',\n",
+       " 'and',\n",
+       " 'but',\n",
+       " 'if',\n",
+       " 'or',\n",
+       " 'because',\n",
+       " 'as',\n",
+       " 'until',\n",
+       " 'while',\n",
+       " 'of',\n",
+       " 'at',\n",
+       " 'by',\n",
+       " 'for',\n",
+       " 'with',\n",
+       " 'about',\n",
+       " 'against',\n",
+       " 'between',\n",
+       " 'into',\n",
+       " 'through',\n",
+       " 'during',\n",
+       " 'before',\n",
+       " 'after',\n",
+       " 'above',\n",
+       " 'below',\n",
+       " 'to',\n",
+       " 'from',\n",
+       " 'up',\n",
+       " 'down',\n",
+       " 'in',\n",
+       " 'out',\n",
+       " 'on',\n",
+       " 'off',\n",
+       " 'over',\n",
+       " 'under',\n",
+       " 'again',\n",
+       " 'further',\n",
+       " 'then',\n",
+       " 'once',\n",
+       " 'here',\n",
+       " 'there',\n",
+       " 'when',\n",
+       " 'where',\n",
+       " 'why',\n",
+       " 'how',\n",
+       " 'all',\n",
+       " 'any',\n",
+       " 'both',\n",
+       " 'each',\n",
+       " 'few',\n",
+       " 'more',\n",
+       " 'most',\n",
+       " 'other',\n",
+       " 'some',\n",
+       " 'such',\n",
+       " 'no',\n",
+       " 'nor',\n",
+       " 'not',\n",
+       " 'only',\n",
+       " 'own',\n",
+       " 'same',\n",
+       " 'so',\n",
+       " 'than',\n",
+       " 'too',\n",
+       " 'very',\n",
+       " 's',\n",
+       " 't',\n",
+       " 'can',\n",
+       " 'will',\n",
+       " 'just',\n",
+       " 'don',\n",
+       " \"don't\",\n",
+       " 'should',\n",
+       " \"should've\",\n",
+       " 'now',\n",
+       " 'd',\n",
+       " 'll',\n",
+       " 'm',\n",
+       " 'o',\n",
+       " 're',\n",
+       " 've',\n",
+       " 'y',\n",
+       " 'ain',\n",
+       " 'aren',\n",
+       " \"aren't\",\n",
+       " 'couldn',\n",
+       " \"couldn't\",\n",
+       " 'didn',\n",
+       " \"didn't\",\n",
+       " 'doesn',\n",
+       " \"doesn't\",\n",
+       " 'hadn',\n",
+       " \"hadn't\",\n",
+       " 'hasn',\n",
+       " \"hasn't\",\n",
+       " 'haven',\n",
+       " \"haven't\",\n",
+       " 'isn',\n",
+       " \"isn't\",\n",
+       " 'ma',\n",
+       " 'mightn',\n",
+       " \"mightn't\",\n",
+       " 'mustn',\n",
+       " \"mustn't\",\n",
+       " 'needn',\n",
+       " \"needn't\",\n",
+       " 'shan',\n",
+       " \"shan't\",\n",
+       " 'shouldn',\n",
+       " \"shouldn't\",\n",
+       " 'wasn',\n",
+       " \"wasn't\",\n",
+       " 'weren',\n",
+       " \"weren't\",\n",
+       " 'won',\n",
+       " \"won't\",\n",
+       " 'wouldn',\n",
+       " \"wouldn't\"]"
+      ]
+     },
+     "execution_count": 54,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "from nltk.corpus import stopwords\n",
+    "eng = stopwords.words('english')\n",
+    "eng"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 55,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "179"
+      ]
+     },
+     "execution_count": 55,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "len(eng)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 57,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "['au',\n",
+       " 'aux',\n",
+       " 'avec',\n",
+       " 'ce',\n",
+       " 'ces',\n",
+       " 'dans',\n",
+       " 'de',\n",
+       " 'des',\n",
+       " 'du',\n",
+       " 'elle',\n",
+       " 'en',\n",
+       " 'et',\n",
+       " 'eux',\n",
+       " 'il',\n",
+       " 'je',\n",
+       " 'la',\n",
+       " 'le',\n",
+       " 'leur',\n",
+       " 'lui',\n",
+       " 'ma',\n",
+       " 'mais',\n",
+       " 'me',\n",
+       " 'même',\n",
+       " 'mes',\n",
+       " 'moi',\n",
+       " 'mon',\n",
+       " 'ne',\n",
+       " 'nos',\n",
+       " 'notre',\n",
+       " 'nous',\n",
+       " 'on',\n",
+       " 'ou',\n",
+       " 'par',\n",
+       " 'pas',\n",
+       " 'pour',\n",
+       " 'qu',\n",
+       " 'que',\n",
+       " 'qui',\n",
+       " 'sa',\n",
+       " 'se',\n",
+       " 'ses',\n",
+       " 'son',\n",
+       " 'sur',\n",
+       " 'ta',\n",
+       " 'te',\n",
+       " 'tes',\n",
+       " 'toi',\n",
+       " 'ton',\n",
+       " 'tu',\n",
+       " 'un',\n",
+       " 'une',\n",
+       " 'vos',\n",
+       " 'votre',\n",
+       " 'vous',\n",
+       " 'c',\n",
+       " 'd',\n",
+       " 'j',\n",
+       " 'l',\n",
+       " 'à',\n",
+       " 'm',\n",
+       " 'n',\n",
+       " 's',\n",
+       " 't',\n",
+       " 'y',\n",
+       " 'été',\n",
+       " 'étée',\n",
+       " 'étées',\n",
+       " 'étés',\n",
+       " 'étant',\n",
+       " 'étante',\n",
+       " 'étants',\n",
+       " 'étantes',\n",
+       " 'suis',\n",
+       " 'es',\n",
+       " 'est',\n",
+       " 'sommes',\n",
+       " 'êtes',\n",
+       " 'sont',\n",
+       " 'serai',\n",
+       " 'seras',\n",
+       " 'sera',\n",
+       " 'serons',\n",
+       " 'serez',\n",
+       " 'seront',\n",
+       " 'serais',\n",
+       " 'serait',\n",
+       " 'serions',\n",
+       " 'seriez',\n",
+       " 'seraient',\n",
+       " 'étais',\n",
+       " 'était',\n",
+       " 'étions',\n",
+       " 'étiez',\n",
+       " 'étaient',\n",
+       " 'fus',\n",
+       " 'fut',\n",
+       " 'fûmes',\n",
+       " 'fûtes',\n",
+       " 'furent',\n",
+       " 'sois',\n",
+       " 'soit',\n",
+       " 'soyons',\n",
+       " 'soyez',\n",
+       " 'soient',\n",
+       " 'fusse',\n",
+       " 'fusses',\n",
+       " 'fût',\n",
+       " 'fussions',\n",
+       " 'fussiez',\n",
+       " 'fussent',\n",
+       " 'ayant',\n",
+       " 'ayante',\n",
+       " 'ayantes',\n",
+       " 'ayants',\n",
+       " 'eu',\n",
+       " 'eue',\n",
+       " 'eues',\n",
+       " 'eus',\n",
+       " 'ai',\n",
+       " 'as',\n",
+       " 'avons',\n",
+       " 'avez',\n",
+       " 'ont',\n",
+       " 'aurai',\n",
+       " 'auras',\n",
+       " 'aura',\n",
+       " 'aurons',\n",
+       " 'aurez',\n",
+       " 'auront',\n",
+       " 'aurais',\n",
+       " 'aurait',\n",
+       " 'aurions',\n",
+       " 'auriez',\n",
+       " 'auraient',\n",
+       " 'avais',\n",
+       " 'avait',\n",
+       " 'avions',\n",
+       " 'aviez',\n",
+       " 'avaient',\n",
+       " 'eut',\n",
+       " 'eûmes',\n",
+       " 'eûtes',\n",
+       " 'eurent',\n",
+       " 'aie',\n",
+       " 'aies',\n",
+       " 'ait',\n",
+       " 'ayons',\n",
+       " 'ayez',\n",
+       " 'aient',\n",
+       " 'eusse',\n",
+       " 'eusses',\n",
+       " 'eût',\n",
+       " 'eussions',\n",
+       " 'eussiez',\n",
+       " 'eussent']"
+      ]
+     },
+     "execution_count": 57,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "french = stopwords.words('french')\n",
+    "french"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 58,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "155"
+      ]
+     },
+     "execution_count": 58,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "len(french)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 59,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "[(',', 6),\n",
+       " ('intelligence', 5),\n",
+       " ('``', 5),\n",
+       " (\"''\", 5),\n",
+       " ('that', 4),\n",
+       " ('the', 3),\n",
+       " ('and', 3),\n",
+       " ('.', 3),\n",
+       " ('its', 3),\n",
+       " ('in', 2)]"
+      ]
+     },
+     "execution_count": 59,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "fdist_top10"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#except intelligence, most of the words are either puncuations or stop-words"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 60,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import re\n",
+    "punch = re.compile(r'[-.?!,:;()|0-9]')"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 61,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "post_punch = []\n",
+    "for words in AI_tokens:\n",
+    "    word = punch.sub('',words)\n",
+    "    if len(word)>0:\n",
+    "        post_punch.append(word)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 62,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "['In',\n",
+       " 'computer',\n",
+       " 'science',\n",
+       " 'artificial',\n",
+       " 'intelligence',\n",
+       " 'AI',\n",
+       " 'sometimes',\n",
+       " 'called',\n",
+       " 'machine',\n",
+       " 'intelligence',\n",
+       " 'is',\n",
+       " 'intelligence',\n",
+       " 'demonstrated',\n",
+       " 'by',\n",
+       " 'machines',\n",
+       " 'in',\n",
+       " 'contrast',\n",
+       " 'to',\n",
+       " 'the',\n",
+       " 'natural',\n",
+       " 'intelligence',\n",
+       " 'displayed',\n",
+       " 'by',\n",
+       " 'humans',\n",
+       " 'and',\n",
+       " 'animals',\n",
+       " 'Computer',\n",
+       " 'science',\n",
+       " 'defines',\n",
+       " 'AI',\n",
+       " 'research',\n",
+       " 'as',\n",
+       " 'the',\n",
+       " 'study',\n",
+       " 'of',\n",
+       " '``',\n",
+       " 'intelligent',\n",
+       " 'agents',\n",
+       " \"''\",\n",
+       " 'any',\n",
+       " 'device',\n",
+       " 'that',\n",
+       " 'perceives',\n",
+       " 'its',\n",
+       " 'environment',\n",
+       " 'and',\n",
+       " 'takes',\n",
+       " 'actions',\n",
+       " 'that',\n",
+       " 'maximize',\n",
+       " 'its',\n",
+       " 'chance',\n",
+       " 'of',\n",
+       " 'successfully',\n",
+       " 'achieving',\n",
+       " 'its',\n",
+       " 'goals',\n",
+       " '[',\n",
+       " ']',\n",
+       " 'Colloquially',\n",
+       " 'the',\n",
+       " 'term',\n",
+       " '``',\n",
+       " 'artificial',\n",
+       " 'intelligence',\n",
+       " \"''\",\n",
+       " 'is',\n",
+       " 'used',\n",
+       " 'to',\n",
+       " 'describe',\n",
+       " 'machines',\n",
+       " 'that',\n",
+       " 'mimic',\n",
+       " '``',\n",
+       " 'cognitive',\n",
+       " \"''\",\n",
+       " 'functions',\n",
+       " 'that',\n",
+       " 'humans',\n",
+       " 'associate',\n",
+       " 'with',\n",
+       " 'other',\n",
+       " 'human',\n",
+       " 'minds',\n",
+       " 'such',\n",
+       " 'as',\n",
+       " '``',\n",
+       " 'learning',\n",
+       " \"''\",\n",
+       " 'and',\n",
+       " '``',\n",
+       " 'problem',\n",
+       " 'solving',\n",
+       " \"''\",\n",
+       " '[',\n",
+       " ']']"
+      ]
+     },
+     "execution_count": 62,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "post_punch"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 63,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "96"
+      ]
+     },
+     "execution_count": 63,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "len(post_punch)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Parts Of Speech"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 64,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "['Timothy', 'is', 'a', 'natural', 'when', 'it', 'comes', 'to', 'drawing']"
+      ]
+     },
+     "execution_count": 64,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "sent = \"Timothy is a natural when it comes to drawing\"\n",
+    "sent_tokens = word_tokenize(sent)\n",
+    "sent_tokens"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 66,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "[('Timothy', 'NN')]\n",
+      "[('is', 'VBZ')]\n",
+      "[('a', 'DT')]\n",
+      "[('natural', 'JJ')]\n",
+      "[('when', 'WRB')]\n",
+      "[('it', 'PRP')]\n",
+      "[('comes', 'VBZ')]\n",
+      "[('to', 'TO')]\n",
+      "[('drawing', 'VBG')]\n"
+     ]
+    }
+   ],
+   "source": [
+    "for token in sent_tokens:\n",
+    "    print(nltk.pos_tag([token]))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 67,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "[('Shivani', 'NN')]\n",
+      "[('is', 'VBZ')]\n",
+      "[('eating', 'VBG')]\n",
+      "[('a', 'DT')]\n",
+      "[('delicious', 'JJ')]\n",
+      "[('cake', 'NN')]\n"
+     ]
+    }
+   ],
+   "source": [
+    "sent2 = \"Shivani is eating a delicious cake\"\n",
+    "sent2_tokens = word_tokenize(sent2)\n",
+    "for token in sent2_tokens:\n",
+    "    print(nltk.pos_tag([token]))"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Named Entity Recognization"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 68,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from nltk import ne_chunk"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 70,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "NE_sent = \"The US President stays in the White House\""
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 71,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "NE_tokens = word_tokenize(NE_sent)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 73,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "NE_tags = nltk.pos_tag(NE_tokens)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 74,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "[('The', 'DT'),\n",
+       " ('US', 'NNP'),\n",
+       " ('President', 'NNP'),\n",
+       " ('stays', 'VBZ'),\n",
+       " ('in', 'IN'),\n",
+       " ('the', 'DT'),\n",
+       " ('White', 'NNP'),\n",
+       " ('House', 'NNP')]"
+      ]
+     },
+     "execution_count": 74,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "NE_tags"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 75,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "image/png": "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",
+      "text/plain": [
+       "Tree('S', [('The', 'DT'), Tree('ORGANIZATION', [('US', 'NNP')]), ('President', 'NNP'), ('stays', 'VBZ'), ('in', 'IN'), ('the', 'DT'), Tree('FACILITY', [('White', 'NNP'), ('House', 'NNP')])])"
+      ]
+     },
+     "execution_count": 75,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "NE_NER = ne_chunk(NE_tags)\n",
+    "NE_NER"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 76,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "(S\n",
+      "  The/DT\n",
+      "  (ORGANIZATION US/NNP)\n",
+      "  President/NNP\n",
+      "  stays/VBZ\n",
+      "  in/IN\n",
+      "  the/DT\n",
+      "  (FACILITY White/NNP House/NNP))\n"
+     ]
+    }
+   ],
+   "source": [
+    "print(NE_NER)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 81,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "[('The', 'DT'),\n",
+       " ('big', 'JJ'),\n",
+       " ('cat', 'NN'),\n",
+       " ('ate', 'VBD'),\n",
+       " ('the', 'DT'),\n",
+       " ('little', 'JJ'),\n",
+       " ('mouse', 'NN'),\n",
+       " ('who', 'WP'),\n",
+       " ('was', 'VBD'),\n",
+       " ('after', 'IN'),\n",
+       " ('the', 'DT'),\n",
+       " ('cheese', 'NN')]"
+      ]
+     },
+     "execution_count": 81,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "new = \"The big cat ate the little mouse who was after the cheese\"\n",
+    "new_tokens = nltk.pos_tag(word_tokenize(new))\n",
+    "new_tokens"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 82,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "grammar_np = r\"NP: {<DT>?<JJ>*<NN>}\""
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 83,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "chunk_parser = nltk.RegexpParser(grammar_np)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 84,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "image/png": "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",
+      "text/plain": [
+       "Tree('S', [Tree('NP', [('The', 'DT'), ('big', 'JJ'), ('cat', 'NN')]), ('ate', 'VBD'), Tree('NP', [('the', 'DT'), ('little', 'JJ'), ('mouse', 'NN')]), ('who', 'WP'), ('was', 'VBD'), ('after', 'IN'), Tree('NP', [('the', 'DT'), ('cheese', 'NN')])])"
+      ]
+     },
+     "execution_count": 84,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "chunk_result = chunk_parser.parse(new_tokens)\n",
+    "chunk_result"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.7.1"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2
+}
